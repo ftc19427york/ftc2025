@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing;
 
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -122,6 +120,13 @@ public class LLHardware {
         }
         // Return null if the IMU is not initialized (which is what your code was doing).
         return null;
+    }
+
+    public void setAllMotorPower(Double power){
+        lf.setPower(-power);
+        lr.setPower(-power);
+        rf.setPower(power);
+        rr.setPower(power);
     }
 }
 

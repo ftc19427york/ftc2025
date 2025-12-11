@@ -38,6 +38,7 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
@@ -52,7 +53,23 @@ public class LLDistance extends OpMode {
     private Limelight3A limelight3A;
     LLHardware robot = new LLHardware (); //reference the hardware file name
 
+
     private double distance;
+
+    private static final double kP = 0.0;
+    private static final double kI = 0.0;
+    private static final double kD = 0.0;
+
+    private static final double kMinCommand = 0.05;
+
+    public DcMotor lr;
+    public DcMotor rf;
+    public DcMotor rr;
+    public DcMotor lf;
+
+    final double Kp = 0.03;
+
+    final double min_power = 0.1;
 
 
 
@@ -97,8 +114,25 @@ public class LLDistance extends OpMode {
                 telemetry.addData("Fiducial", "ID: %d, Family: %s, X: %.2f, Y: %.2f", fr.getFiducialId(), fr.getFamily(), fr.getTargetXDegrees(), fr.getTargetYDegrees());
             }
         }
+ if (llResult.isValid()) {
+     double tx = llResult.getTx();
 
+     double steering_adjust = tx * Kp;
 
+     if (Math.abs(steering_adjust) < min_power) {
+         steering_adjust = Math.signum(steering_adjust) * min_power;
+     }
+
+     double left_power = steering_adjust;
+     double right_power = -steering_adjust;
+
+     robot.lf.setPower(left_power);
+     robot.lr.setPower(left_power);
+     robot.rf.setPower(right_power);
+     robot.rr.setPower(right_power);
+ } else {
+     robot.setAllMotorPower(0.0);
+ }
 
 
 
