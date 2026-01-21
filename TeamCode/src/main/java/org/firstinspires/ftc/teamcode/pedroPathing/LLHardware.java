@@ -57,6 +57,7 @@ public class LLHardware {
 
     public Servo tilt;
 
+//    private Limelight3A limelight3A;
 
     public Servo Torrent ;
 
@@ -95,7 +96,7 @@ public class LLHardware {
         tilt = hwMap.get(Servo.class, "servo1");  //hood
 
 
-
+//        limelight3A = hwMap.get(Limelight3A.class, "limelight");
 
 
 //        limelight = hwMap.get(Limelight3A.class, "limelight");

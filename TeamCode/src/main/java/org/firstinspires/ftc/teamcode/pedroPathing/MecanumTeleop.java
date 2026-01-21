@@ -8,6 +8,8 @@ import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.HeadingInterpolator;
 import com.pedropathing.paths.Path;
 import com.pedropathing.paths.PathChain;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -25,7 +27,7 @@ import java.util.function.Supplier;
 @Configurable
 @TeleOp
 public class MecanumTeleop extends OpMode {
-
+//    private Limelight3A limelight3A;
     LLHardware robot = new LLHardware ();
     private Follower follower;
     public static Pose startingPose; //See ExampleAuto to understand how to use this
@@ -43,8 +45,9 @@ public class MecanumTeleop extends OpMode {
 
     @Override
     public void init() {
-
         robot.init(hardwareMap);
+//        limelight3A.pipelineSwitch(0);
+//        limelight3A.start();
         follower = Constants2.createFollower(hardwareMap);
         follower.setStartingPose(startingPose == null ? new Pose() : startingPose);
         follower.update();
@@ -66,7 +69,9 @@ public class MecanumTeleop extends OpMode {
 
     @Override
     public void loop() {
-
+//        LLResult llResult = limelight3A.getLatestResult();
+        final double Kp = 0.03;
+        final double min_power = 0.4;
 
         double maxSpeedLimit = 0.53;
         double minSpeedLimit = 0.3;
@@ -165,7 +170,7 @@ public class MecanumTeleop extends OpMode {
         if (gamepad2.left_trigger > 0.5){
             robot.ip.setPower(-1); //in
         }
-        else if (gamepad2.right_trigger > 0.5) {
+        else if (gamepad1.right_trigger > 0.5) {
             robot.ip.setPower(1); //out
         }
         else{
@@ -195,7 +200,26 @@ public class MecanumTeleop extends OpMode {
 
 
         /** ELSE */
-
+//
+//        if(gamepad1.left_bumper) {
+//            if (llResult.isValid()) {
+//                double ta = llResult.getTa();
+//
+//                double speed_adjust = ta * Kp;
+//
+//                if (Math.abs(speed_adjust) < min_power) {
+//                    speed_adjust = Math.signum(speed_adjust) * min_power;
+//                }
+//
+//                double left_power = speed_adjust;
+//
+//                robot.op.setPower(left_power);
+//
+//            } else {
+//                robot.op.setPower(0.0);
+//            }
+//
+//        }
 
 
 
