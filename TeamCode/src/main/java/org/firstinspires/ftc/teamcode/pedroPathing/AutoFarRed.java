@@ -8,7 +8,7 @@ import com.pedropathing.paths.PathChain;
 import com.pedropathing.util.Timer;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import  com.qualcomm.robotcore.eventloop.opmode.OpMode;
-/// ////////////
+
 @Autonomous(name = "AutoFarRed", group = "Auto")
 public class AutoFarRed extends OpMode {
     LLHardware robot = new LLHardware ();
